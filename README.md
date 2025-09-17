@@ -4,7 +4,11 @@ A statusline for Claude Code.
 
 Idea from https://gist.github.com/steipete/8396e512171d31e934f0013e5651691e.
 
+Fork from https://github.com/antongub/cc-statusline-rs.  
+Adjustments: Removed Session-ID and Money Costs from statusline.
+
 ![demo](demo.png)
+
 
 ## Quick Start
 

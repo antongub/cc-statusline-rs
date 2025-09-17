@@ -81,29 +81,9 @@ pub fn statusline(short_mode: bool, _show_pr_status: bool) -> String {
     let lines_display = if let Some(cost_obj) = input.get("cost") {
         let lines_added = cost_obj.get("total_lines_added").and_then(|l| l.as_u64()).unwrap_or(0);
         let lines_removed = cost_obj.get("total_lines_removed").and_then(|l| l.as_u64()).unwrap_or(0);
-        
+
         if lines_added > 0 || lines_removed > 0 {
             format!("\x1b[32m+{}\x1b[0m \x1b[31m-{}\x1b[0m", lines_added, lines_removed)
-        } else {
-            String::new()
-        }
-    } else {
-        String::new()
-    };
-
-    // Cost display from input JSON
-    let cost_display = if let Some(cost_obj) = input.get("cost") {
-        if let Some(total_cost) = cost_obj.get("total_cost_usd").and_then(|c| c.as_f64()) {
-            let formatted_cost = format_cost(total_cost);
-            // Color based on cost ranges
-            let cost_color = if total_cost < 5.0 {
-                "\x1b[32m"  // Green for < $5.00
-            } else if total_cost < 20.0 {
-                "\x1b[33m"  // Yellow for < $20.00
-            } else {
-                "\x1b[31m"  // Red for >= $20.00
-            };
-            format!("{}{}\x1b[0m", cost_color, formatted_cost)
         } else {
             String::new()
         }
@@ -124,17 +104,13 @@ pub fn statusline(short_mode: bool, _show_pr_status: bool) -> String {
         components.push(context_display.clone());
     }
 
-    // Always add duration, lines changed, and cost if available
+    // Always add duration and lines changed if available
     if !duration_display.is_empty() {
         components.push(duration_display.clone());
     }
 
     if !lines_display.is_empty() {
         components.push(lines_display.clone());
-    }
-
-    if !cost_display.is_empty() {
-        components.push(cost_display.clone());
     }
 
     // Join components with bullet separator
@@ -351,10 +327,3 @@ pub fn parse_timestamp(timestamp: &serde_json::Value) -> Option<i64> {
     }
 }
 
-pub fn format_cost(cost: f64) -> String {
-    if cost < 0.01 {
-        format!("${:.3}", cost)
-    } else {
-        format!("${:.2}", cost)
-    }
-}

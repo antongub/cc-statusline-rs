@@ -69,7 +69,7 @@ cargo fmt      # Code formatting
 
 - Extracts session duration from transcript timestamps
 - Generates AI-powered summaries of user's first substantial message
-- Displays session ID and duration information
+- Displays duration information
 
 **PR Status Display**:
 
@@ -79,9 +79,9 @@ cargo fmt      # Code formatting
 
 ### Display Format
 
-The output follows this order: `path [branch+status] • context%+model • summary • PR+status • session_id • duration`
+The output follows this order: `path [branch+status] • context%+model • summary • PR+status • duration`
 
-Example: `~/project [main +2 ~1] • 45% Opus • fix login bug • https://github.com/... ✓3 • abc123 • 15m`
+Example: `~/project [main +2 ~1] • 45% Opus • fix login bug • https://github.com/... ✓3 • 15m`
 
 ### Dependencies
 
@@ -96,7 +96,6 @@ Expects JSON on stdin with fields:
 - `workspace.current_dir`: Working directory path
 - `model.display_name`: AI model name for display
 - `transcript_path`: Path to conversation transcript file
-- `session_id`: Unique session identifier
 
 The `test.json` file shows the expected input structure for development and testing.
 
